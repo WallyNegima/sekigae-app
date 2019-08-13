@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div style="width: 1360px; margin: 60px auto;">
+    <SeatsExchanger :patterns="patterns" />
+    <div style="width: 1360px; margin: 40px auto;">
       <Seats :members="line1" />
       <Seats :members="line2" />
       <Seats :members="line3" />
@@ -10,12 +11,16 @@
 
 <script>
 import Seats from "~/components/Seats.vue";
+import SeatsExchanger from "~/components/SeatsExchanger.vue";
+
 export default {
   components: {
-    Seats: Seats
+    Seats: Seats,
+    SeatsExchanger: SeatsExchanger
   },
   data() {
     return {
+      patterns: [{ text: "AIが決める", value: this.exchangeByAI }],
       members: [
         { id: 1, name: "あらた" },
         { id: 2, name: "りょうちゃん" },
@@ -59,6 +64,12 @@ export default {
     },
     line3() {
       return this.members.slice(20, 30);
+    }
+  },
+  methods: {
+    exchangeByAI: function() {
+      console.log("execute!");
+      return [...Array(30).keys()];
     }
   }
 };
