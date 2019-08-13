@@ -79,7 +79,7 @@ jobs:
             - node_modules
       - run:
           name: build
-          command: yarn p_generate
+          command: yarn generate
       - run:
           name: deploy
           command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN
