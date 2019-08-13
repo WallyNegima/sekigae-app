@@ -21,8 +21,8 @@
         "function": "app"
       },
       {
-        "source": "**",
-        "function": "index.html"
+        "source": "/**",
+        "destination": "/index.html"
       }
     ]
   }
