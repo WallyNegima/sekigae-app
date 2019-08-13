@@ -82,7 +82,7 @@ dist
 
 # Service worker
 sw.*
-.firebase
+.firebase/
 \.DS_Store
 
 \.vscode/
