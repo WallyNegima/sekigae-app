@@ -17,8 +17,12 @@
     ],
     "rewrites": [
       {
+        "source": "/server",
+        "function": "app"
+      },
+      {
         "source": "**",
-        "destination": "/index.html"
+        "function": "index.html"
       }
     ]
   }
