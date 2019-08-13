@@ -1,6 +1,7 @@
 <template>
   <div>
     <SeatsExchanger :patterns="patterns" />
+    <div style="margin: auto; text-align: center; font-size: 24px;">スクリーン側</div>
     <div style="width: 1360px; margin: 40px auto;">
       <Seats :members="line1" />
       <Seats :members="line2" />

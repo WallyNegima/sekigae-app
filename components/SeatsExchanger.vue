@@ -2,7 +2,7 @@
   <div class="exchangerContainer">
     <div class="selector">
       <v-select :items="patterns" label="Outlined style" outlined v-model="selectedFunction"></v-select>
-      <v-btn @click="execExchange" style="margin: 14px;">席替えをする</v-btn>
+      <v-btn @click="execExchange" style="margin: 14px; font-weight: bold;">席替えをする</v-btn>
     </div>
   </div>
 </template>
