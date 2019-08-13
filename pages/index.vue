@@ -12,6 +12,7 @@
 <script>
 import Seats from "~/components/Seats.vue";
 import SeatsExchanger from "~/components/SeatsExchanger.vue";
+import { exchangeMembers } from "~/utils/exchangeMembers";
 
 export default {
   components: {
@@ -20,6 +21,7 @@ export default {
   },
   data() {
     return {
+      // 2. ここに{text: "hoge", value: 選択したときに実行される関数 }なオブジェクトを配置する
       patterns: [{ text: "AIが決める", value: this.exchangeByAI }],
       members: [
         { id: 1, name: "あらた" },
@@ -67,9 +69,20 @@ export default {
     }
   },
   methods: {
+    // 1. 席替えアルゴリズムを実装し, 0〜29のindexの配列を作成し, exchangeMembers関数に噛ませて members を更新する関数を作成
     exchangeByAI: function() {
       console.log("execute!");
-      return [...Array(30).keys()];
+      let baseArray = [...Array(30).keys()];
+      for (let i = this.members.length - 1; i >= 0; i--) {
+        // 0~iのランダムな数値を取得
+        let rand = Math.floor(Math.random() * (i + 1));
+
+        // 配列の数値を入れ替える
+        [baseArray[i], baseArray[rand]] = [baseArray[rand], baseArray[i]];
+      }
+      console.log(baseArray);
+
+      this.members = exchangeMembers(this.members, baseArray);
     }
   }
 };
