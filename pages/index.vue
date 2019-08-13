@@ -72,7 +72,6 @@ export default {
   methods: {
     // 1. 席替えアルゴリズムを実装し, 0〜29のindexの配列を作成し, exchangeMembers関数に噛ませて members を更新する関数を作成
     exchangeByAI: function() {
-      console.log("execute!");
       let baseArray = [...Array(30).keys()];
       for (let i = this.members.length - 1; i >= 0; i--) {
         // 0~iのランダムな数値を取得
@@ -81,7 +80,6 @@ export default {
         // 配列の数値を入れ替える
         [baseArray[i], baseArray[rand]] = [baseArray[rand], baseArray[i]];
       }
-      console.log(baseArray);
 
       this.members = exchangeMembers(this.members, baseArray);
     }
