@@ -74,11 +74,12 @@ jobs:
           key: v1-npm-deps-{{ checksum "package.json" }}
       - run: yarn
       # functionsのほうもnpm installする
-      - run: cd functions && yarn && cd ../
+      - run: cd functions && npm install && cd ../
       - save_cache:
           key: v1-dependencies-{{ checksum "package.json" }}-{{ checksum "functions/package.json" }}
           paths:
             - node_modules
+            - functions/node_modules
       - run:
           name: build
           command: yarn generate
