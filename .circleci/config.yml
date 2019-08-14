@@ -86,6 +86,7 @@ jobs:
       - run:
           name: deploy
           command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN
+          no_output_timeout: 15m
 
 workflows:
   version: 2.1
