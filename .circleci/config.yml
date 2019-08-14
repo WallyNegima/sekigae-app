@@ -85,8 +85,8 @@ jobs:
           command: yarn generate
       - run:
           name: deploy
-          command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN
-          no_output_timeout: 15m
+          command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN --only hosting
+          no_output_timeout: 10m
 
 workflows:
   version: 2.1
