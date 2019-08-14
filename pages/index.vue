@@ -14,6 +14,8 @@
 import Seats from "~/components/Seats.vue";
 import SeatsExchanger from "~/components/SeatsExchanger.vue";
 import { exchangeMembers } from "~/utils/exchangeMembers";
+import axios from "axios";
+const URL = "https://us-central1-sekigae-114514.cloudfunctions.net/app";
 
 export default {
   components: {
@@ -23,7 +25,10 @@ export default {
   data() {
     return {
       // 2. ここに{text: "hoge", value: 選択したときに実行される関数 }なオブジェクトを配置する
-      patterns: [{ text: "AIが決める", value: this.exchangeByAI }],
+      patterns: [
+        { text: "AIが決める", value: this.exchangeByAI },
+        { text: "今日の占い結果から決める", value: this.exchangeByStars }
+      ],
       baseMembers: [
         { id: 1, name: "あらた", star: "魚座", eniaguramu: 5 },
         { id: 2, name: "りょうちゃん", star: "蟹座", eniaguramu: 1 },
@@ -91,7 +96,17 @@ export default {
 
       this.sortedMembers = exchangeMembers(this.baseMembers, baseArray);
     },
-    exchangeByStars: function() {}
+    exchangeByStars: function() {
+      axios
+        .get(`${URL}/star`)
+        .then(sortedMembers => {
+          console.debug(sortedMembers);
+          this.sortedMembers = sortedMembers;
+        })
+        .catch(e => {
+          console.debug(e);
+        });
+    }
   }
 };
 </script>
