@@ -1,17 +1,26 @@
 const axios = require('axios');
 
-const util = require('../utils/array');
+const dateUtil = require('../utils/date');
 const db = require('../db');
 
 module.exports = {
     getMemberByStar: function () {
-        return  axios.get('http://api.jugemkey.jp/api/horoscope/free/2019/08/14')
+        return axios.get('http://api.jugemkey.jp/api/horoscope/free/' + dateUtil.getToday())
             .then(res => {
-                return res
+                return parseStarJson(res.data);
             })
             .catch(err => {
                 console.error(err);
                 throw err
             })
     }
+};
+
+const parseStarJson = (starObject) => {
+    const startArray = starObject.horoscope[dateUtil.getToday()];
+    const returnObject = {
+        'star': startArray,
+        'members': db.getMembers()  // todo: 占い結果で並び替え
+    };
+    return returnObject;
 };

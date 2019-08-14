@@ -15,7 +15,8 @@ import Seats from "~/components/Seats.vue";
 import SeatsExchanger from "~/components/SeatsExchanger.vue";
 import { exchangeMembers } from "~/utils/exchangeMembers";
 import axios from "axios";
-const URL = "https://us-central1-sekigae-114514.cloudfunctions.net/app";
+const URL = "https://us-central1-sekigae-114514.cloudfunctions.net/app/server";
+// const URL = "http://localhost:5000/server";  // ForDevelopment
 
 export default {
   components: {
@@ -99,9 +100,9 @@ export default {
     exchangeByStars: function() {
       axios
         .get(`${URL}/star`)
-        .then(sortedMembers => {
-          console.debug(sortedMembers);
-          this.sortedMembers = sortedMembers;
+        .then(res => {
+          console.debug(res);
+          this.sortedMembers = res.data.members;
         })
         .catch(e => {
           console.debug(e);
