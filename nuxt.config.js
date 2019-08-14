@@ -24,6 +24,18 @@ export default {
       {
         name: 'robots',
         content: 'noindex'
+      },
+      {
+        property: 'og:image',
+        content: '/ogp.jpg'
+      },
+      {
+        property: 'og:title',
+        content: 'みんなの席替えアプリ'
+      },
+      {
+        property: 'og:description',
+        content: '席替えアプリです. PWAにも対応しています.'
       }
     ],
     link: [{
