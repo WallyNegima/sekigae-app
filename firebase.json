@@ -21,6 +21,10 @@
         "function": "app"
       },
       {
+        "source": "/server/**",
+        "function": "app"
+      },
+      {
         "source": "/**",
         "destination": "/index.html"
       }
