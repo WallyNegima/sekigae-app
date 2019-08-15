@@ -23,8 +23,13 @@ const parseStarJson = (starObject) => {
     const exchangedStar = arrayUtil.exchangeStarResponse(startArray);
     const members = db.getMembers();
     arrayUtil.insertRankToMembers(exchangedStar, members);
+    let sortedMember = _.sortBy(members, ['rank']);
+    sortedMember = sortedMember.map((v, index) => {
+        v.total_rank = index + 1;
+        return v;
+    });
     return {
         'star': _.sortBy(startArray, ['rank']),
-        'members': _.sortBy(members, ['rank'])
+        'members': sortedMember
     };
 };
