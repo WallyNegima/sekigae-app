@@ -5,14 +5,18 @@ const db = require('../db');
 
 module.exports = {
     getMemberByStar: function () {
-        return axios.get('http://api.jugemkey.jp/api/horoscope/free/' + dateUtil.getToday())
-            .then(res => {
-                return parseStarJson(res.data);
-            })
-            .catch(err => {
-                console.error(err);
-                throw err
-            })
+        return {
+            "star": db.getStar(),
+            "members": db.getStarMember(),
+        };
+        // return axios.get('http://api.jugemkey.jp/api/horoscope/free/' + dateUtil.getToday())
+        //     .then(res => {
+        //         return parseStarJson(res.data);
+        //     })
+        //     .catch(err => {
+        //         console.error(err);
+        //         throw err
+        //     })
     }
 };
 
