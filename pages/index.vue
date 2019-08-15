@@ -15,7 +15,7 @@ import Seats from "~/components/Seats.vue";
 import SeatsExchanger from "~/components/SeatsExchanger.vue";
 import { exchangeMembers } from "~/utils/exchangeMembers";
 import axios from "axios";
-const URL = "https://us-central1-sekigae-114514.cloudfunctions.net/app";
+const URL = "https://us-central1-sekigae-114514.cloudfunctions.net/app/server";
 
 export default {
   components: {
@@ -61,7 +61,8 @@ export default {
         { id: 29, name: "タツヤ", star: "天秤座", eniaguramu: 3 },
         { id: 30, name: "てっちゃん", star: "水瓶座", eniaguramu: 9 }
       ],
-      sortedMembers: null
+      sortedMembers: null,
+      star: []
     };
   },
   computed: {
@@ -99,12 +100,12 @@ export default {
     exchangeByStars: function() {
       axios
         .get(`${URL}/star`)
-        .then(sortedMembers => {
-          console.debug(sortedMembers);
-          this.sortedMembers = sortedMembers;
+        .then(resp => {
+          this.star = resp.data.star;
+          this.sortedMembers = resp.data.members;
         })
         .catch(e => {
-          console.debug(e);
+          console.log(e);
         });
     }
   }
