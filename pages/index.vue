@@ -7,24 +7,32 @@
       <Seats :members="line2" />
       <Seats :members="line3" />
     </div>
+    <Star :stars="star" />
   </div>
 </template>
 
 <script>
 import Seats from "~/components/Seats.vue";
 import SeatsExchanger from "~/components/SeatsExchanger.vue";
+import Star from "~/components/Star.vue";
 import { exchangeMembers } from "~/utils/exchangeMembers";
+import axios from "axios";
+const URL = "https://us-central1-sekigae-114514.cloudfunctions.net/app/server";
 
 export default {
   components: {
     Seats: Seats,
-    SeatsExchanger: SeatsExchanger
+    SeatsExchanger: SeatsExchanger,
+    Star: Star
   },
   data() {
     return {
       // 2. ここに{text: "hoge", value: 選択したときに実行される関数 }なオブジェクトを配置する
-      patterns: [{ text: "AIが決める", value: this.exchangeByAI }],
-      members: [
+      patterns: [
+        { text: "AIが決める", value: this.exchangeByAI },
+        { text: "今日の占い結果から決める", value: this.exchangeByStars }
+      ],
+      baseMembers: [
         { id: 1, name: "あらた", star: "魚座", eniaguramu: 5 },
         { id: 2, name: "りょうちゃん", star: "蟹座", eniaguramu: 1 },
         { id: 3, name: "ひろき", star: "蠍座", eniaguramu: 5 },
@@ -55,7 +63,9 @@ export default {
         { id: 28, name: "りゅう", star: "蠍座", eniaguramu: 3 },
         { id: 29, name: "タツヤ", star: "天秤座", eniaguramu: 3 },
         { id: 30, name: "てっちゃん", star: "水瓶座", eniaguramu: 9 }
-      ]
+      ],
+      sortedMembers: null,
+      star: []
     };
   },
   computed: {
@@ -67,13 +77,20 @@ export default {
     },
     line3() {
       return this.members.slice(20, 30);
+    },
+    members() {
+      if (this.sortedMembers == null) {
+        return this.baseMembers;
+      } else {
+        return this.sortedMembers;
+      }
     }
   },
   methods: {
     // 1. 席替えアルゴリズムを実装し, 0〜29のindexの配列を作成し, exchangeMembers関数に噛ませて members を更新する関数を作成
     exchangeByAI: function() {
       let baseArray = [...Array(30).keys()];
-      for (let i = this.members.length - 1; i >= 0; i--) {
+      for (let i = this.baseMembers.length - 1; i >= 0; i--) {
         // 0~iのランダムな数値を取得
         let rand = Math.floor(Math.random() * (i + 1));
 
@@ -81,7 +98,18 @@ export default {
         [baseArray[i], baseArray[rand]] = [baseArray[rand], baseArray[i]];
       }
 
-      this.members = exchangeMembers(this.members, baseArray);
+      this.sortedMembers = exchangeMembers(this.baseMembers, baseArray);
+    },
+    exchangeByStars: function() {
+      axios
+        .get(`${URL}/star`)
+        .then(resp => {
+          this.star = resp.data.star;
+          this.sortedMembers = resp.data.members;
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   }
 };

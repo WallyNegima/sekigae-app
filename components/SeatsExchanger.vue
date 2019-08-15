@@ -1,7 +1,7 @@
 <template>
   <div class="exchangerContainer">
     <div class="selector">
-      <v-select :items="patterns" label="席替え方法を選ぶ" outlined v-model="selectedFunction"></v-select>
+      <v-select :items="patternLabels" label="席替え方法を選ぶ" outlined v-model="selectedFunction"></v-select>
       <v-btn @click="execExchange" style="margin: 14px; font-weight: bold;">席替えをする</v-btn>
     </div>
   </div>
@@ -22,13 +22,16 @@ export default {
   },
   computed: {
     patternLabels: function() {
-      return this.patterns.map(pattern => pattern.label);
+      return this.patterns.map(pattern => pattern.text);
     }
   },
   methods: {
     execExchange: function() {
       if (this.selectedFunction) {
-        this.selectedFunction();
+        const selectedObj = this.patterns.find(p => {
+          return p.text === this.selectedFunction;
+        });
+        selectedObj.value();
       }
     }
   }
