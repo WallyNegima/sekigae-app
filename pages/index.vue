@@ -7,12 +7,14 @@
       <Seats :members="line2" />
       <Seats :members="line3" />
     </div>
+    <Star :stars="star" />
   </div>
 </template>
 
 <script>
 import Seats from "~/components/Seats.vue";
 import SeatsExchanger from "~/components/SeatsExchanger.vue";
+import Star from "~/components/Star.vue";
 import { exchangeMembers } from "~/utils/exchangeMembers";
 import axios from "axios";
 const URL = "https://us-central1-sekigae-114514.cloudfunctions.net/app/server";
@@ -20,7 +22,8 @@ const URL = "https://us-central1-sekigae-114514.cloudfunctions.net/app/server";
 export default {
   components: {
     Seats: Seats,
-    SeatsExchanger: SeatsExchanger
+    SeatsExchanger: SeatsExchanger,
+    Star: Star
   },
   data() {
     return {
